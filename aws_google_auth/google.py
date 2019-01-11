@@ -134,7 +134,10 @@ class Google:
 
     def do_login(self):
         self.session = requests.Session()
-        self.session.headers['User-Agent'] = "AWS Sign-in/{} (Cevo aws-google-auth)".format(self.version)
+        if not self.config.u2f_disabled:
+            self.session.headers['User-Agent'] = "AWS Sign-in/{} (Cevo aws-google-auth)".format(self.version)
+        else:
+            self.session.headers['User-Agent'] = "Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A356 Safari/604.1"
         sess = self.get(self.login_url)
 
         # Collect information from the page source
